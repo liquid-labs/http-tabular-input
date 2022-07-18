@@ -160,15 +160,15 @@ const buildPipelines = ({ files, headerNormalizations, headerValidations, record
 * - `resourceAPI`: see `importFromCSV`
 */
 const processPipelines = ({
-  canBeAutoDeleted = () => true,
-  finalizeRecord = identity,
+  canBeAutoDeleted=() => true,
+  finalizeRecord=identity,
   model,
   org,
   pipelines,
   records,
   res,
   resourceAPI,
-  validateAndNormalizeRecords = identity
+  validateAndNormalizeRecords=identity
 }) => {
   const names = { itemName : resourceAPI.itemName, resourceName : resourceAPI.resourceName }
   Promise.all(pipelines).then(() => {

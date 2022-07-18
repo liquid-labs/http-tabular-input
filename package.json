@@ -27,7 +27,7 @@
     "orgBase": "git@github.com:Liquid-Labs/Liquid-Labs.git"
   },
   "devDependencies": {
-    "@liquid-labs/catalyst-scripts": "^1.0.0-alpha.55"
+    "@liquid-labs/catalyst-scripts": "^1.0.0-alpha.56"
   },
   "dependencies": {
     "@fast-csv/parse": "^4.3.6",
