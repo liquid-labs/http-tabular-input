@@ -34,6 +34,7 @@ const identity = (r) => r
 *     ```
 *     (headers) => headers.indexOf('requiredField') !== -1 ? null : "missing required field 'requiredField'"
 *     ```
+* - `org`: the Organization instance
 * - `res`: required Express 'results' object. This is used to set 400 and 500 responses.
 * - `resourceAPI`:required API object used to retrieve current items and check against incoming items for DB refresh.
 *     Must implement:
