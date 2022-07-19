@@ -1,8 +1,8 @@
 {
   "name": "@liquid-labs/import-export",
-  "version": "1.0.0-alpha.1",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.0-alpha.2",
+  "description": "Utilities to import data (into JSON) from various sources (CSV, TSV, etc.)",
+  "main": "dist/import-export.js",
   "scripts": {
     "build": "make",
     "test": "make test",
