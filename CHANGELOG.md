@@ -13,3 +13,6 @@
 * _**hotfix**_: updated CHANGELOGE.md for release (by liq) _(zane@liquid-labs.com; 2022-07-19T16:32:18.000Z)_
 * _**hotfix**_: updated CHANGELOGE.md for release (by liq) _(zane@liquid-labs.com; 2022-07-19T16:33:08.000Z)_
 * _**hotfix**_: sketched in description and updated 'main' entry _(zane@liquid-labs.com; 2022-07-19T16:33:50.000Z)_
+
+## Release 1.0.0-alpha.3
+* _**hotfix**_: specified package type (to trigger proper rollup compile) _(zane@liquid-labs.com; 2022-07-19T16:55:07.000Z)_
