@@ -123,7 +123,9 @@ const buildPipelines = ({ files, headerNormalizations, headerValidations, record
     for (const { fileName : altName, name, data } of varData) {
       const fileName = name || altName
       // TODO: can I reuse the same stream?
+      const delimiter = fileName.toLowerCase().endsWith('.tsv') ? '\t' : ','
       const parserStream = parseCSV({
+        delimiter,
         // 'fileName' is used to generate useful error messages
         headers     : validateAndNormalizeHeaders({ fileName, headerNormalizations, headerValidations }),
         trim        : true,
@@ -319,7 +321,7 @@ const validateAndNormalizeHeaders =
 
       // First we map the incoming headers to known header names
       for (const origHeader of origHeaders) {
-        const match = headerNormalizations.find(([re], i) => origHeader.match(re))
+        const match = headerNormalizations.find(([re]) => origHeader.match(re))
         // if we match, map the header to the known name; otherwise, leave the header unchanged
         newHeaders.push(match ? match[1] : origHeader)
       }
