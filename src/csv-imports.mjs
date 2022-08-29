@@ -37,16 +37,16 @@ const identity = (r) => r
 * - `org`: the Organization instance
 * - `res`: required Express 'results' object. This is used to set 400 and 500 responses.
 * - `resourceAPI`:required API object used to retrieve current items and check against incoming items for DB refresh.
-*     Must implement:
-*     - `itemName`
-*     - `keyField`
-*     - `resourceName`: plural item
-*     - add()
-*     - delete()
-*     - get()
-*     - list()
-*     - update()
-*     - write(): updates underlying DB
+*   Must implement:
+*   - `itemName`
+*   - `keyField`
+*   - `resourceName`: plural item
+*   - add()
+*   - delete()
+*   - get()
+*   - list()
+*   - update()
+*   - write(): updates underlying DB
 * - `validateAndNormalizeRecords`: optional function used to process the array of records to extract and normalize
 *     data. This can be used to add new data as well as combine, vaidate, and transform existing data. E.g.: split field
 *     'fullName' into 'givenName' and 'surname'; calculate 'daysSinceCertification' from 'lastCertification'; parse
@@ -54,6 +54,8 @@ const identity = (r) => r
 *     useful, user facing error message. Note this function is used to normalize the 'form' of the data. Use
 *     `finalizeRecord` to update the content. E.g., augment using external data incorporate cross references, etc.
 *     Defaults to identity function `(r) => r`.
+* - `validateAllRecords`: optional global validation function called after successful record level validation. The
+*     function takes `{ org }`.
 */
 const importFromCSV = (options) => {
   const { res } = options
@@ -155,12 +157,7 @@ const buildPipelines = ({ files, headerNormalizations, headerValidations, record
 *
 * ### Parameters
 *
-* - `canBeAutoDeleted`: see `importFromCSV`
-* - `finalizeRecord`: see `importFromCSV`
-* - `pipelines`: the record processing pipelines
-* - `records`: the list of incoming records (completed after pipelines processed)
-* - `res`: see `importFromCSV`
-* - `resourceAPI`: see `importFromCSV`
+* See `importFromCSV`
 */
 const processPipelines = ({
   canBeAutoDeleted = () => true,
@@ -171,7 +168,8 @@ const processPipelines = ({
   records,
   res,
   resourceAPI,
-  validateAndNormalizeRecords = identity
+  validateAndNormalizeRecords = identity,
+  validateAllRecords = () => []
 }) => {
   const names = { itemName : resourceAPI.itemName, resourceName : resourceAPI.resourceName }
   Promise.all(pipelines).then(() => {
@@ -187,7 +185,10 @@ const processPipelines = ({
     processDeletions({ actions, actionSummary, canBeAutoDeleted, errors, keepList, resourceAPI })
 
     for (const action of actions) action()
-    if (!checkStatus({ errors, source : 'processing updates', model, res })) return
+    if (!checkStatus({ errors, source : 'processing updates', model, res })
+        || !checkStatus({ errors: validateAllRecords({ org }), source: 'final validation', model, res })) {
+      return
+    }
 
     try {
       resourceAPI.write()
