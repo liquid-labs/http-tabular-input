@@ -161,6 +161,7 @@ const buildPipelines = ({ files, headerNormalizations, headerValidations, record
 */
 const processPipelines = ({
   canBeAutoDeleted = () => true,
+  finalizeAllRecords = () => null,
   finalizeRecord = identity,
   model,
   org,
@@ -181,7 +182,7 @@ const processPipelines = ({
     const actionSummary = []
     // these build up 'actions', but don't do anything to the model until processed
     const { keepList } =
-      processNewAndUpdated({ actions, actionSummary, errors, finalizeRecord, normalizedRecords, org, resourceAPI, ...names })
+      processNewAndUpdated({ actions, actionSummary, errors, finalizeRecord, finalizeAllRecords, normalizedRecords, org, resourceAPI, ...names })
     processDeletions({ actions, actionSummary, canBeAutoDeleted, errors, keepList, resourceAPI })
 
     for (const action of actions) action()
@@ -214,19 +215,25 @@ const processNewAndUpdated = ({
   actions,
   actionSummary,
   errors,
+  finalizeAllRecords,
   finalizeRecord,
   itemName,
   normalizedRecords,
   org,
   resourceAPI
 }) => {
-  const keepList = []
+  const finalizedRecords = []
+  const finalizationCookie = {}
   // process the incoming and normalized records
   for (let newRecord of normalizedRecords) {
-    newRecord = finalizeRecord({ actions, actionSummary, newRecord, org })
-    const newId = newRecord[resourceAPI.keyField.toLowerCase()] // notice we normalize the ID to lower case
-    keepList.push(newId)
-
+    newRecord = finalizeRecord({ actions, actionSummary, newRecord, finalizationCookie, org })
+    finalizedRecords.push(newRecord)
+  }
+  
+  finalizeAllRecords({ finalizedRecords, finalizationCookie })
+  
+  for (const newRecord of finalizedRecords) {
+    const newId = newRecord[resourceAPI.keyField]
     const origRecord = resourceAPI.get(newId, { rawData : true })
     const cleanNewRecord = pickBy(newRecord, (v, k) => !k.startsWith('_'))
     const diff = diffString(origRecord, cleanNewRecord, { color : false })
@@ -253,6 +260,7 @@ const processNewAndUpdated = ({
     }
   } // record processing loop
 
+  const keepList = finalizedRecords.map((r) => r[resourceAPI.keyField])
   return { actions, actionSummary, keepList }
 }
 
