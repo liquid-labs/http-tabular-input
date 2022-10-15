@@ -1,7 +1,6 @@
 import { Readable } from 'stream'
 import * as StreamPromises from 'stream/promises'
 import { parse as parseCSV } from '@fast-csv/parse'
-import pickBy from 'lodash.pickby'
 import { diffString } from 'json-diff'
 
 const identity = (r) => r
@@ -187,7 +186,7 @@ const processPipelines = ({
 
     for (const action of actions) action()
     if (!checkStatus({ errors, source : 'processing updates', model, res })
-        || !checkStatus({ errors: validateAllRecords({ org }), source: 'final validation', model, res })) {
+        || !checkStatus({ errors : validateAllRecords({ org }), source : 'final validation', model, res })) {
       return
     }
 
@@ -229,9 +228,9 @@ const processNewAndUpdated = ({
     newRecord = finalizeRecord({ actions, actionSummary, newRecord, finalizationCookie, org })
     finalizedRecords.push(newRecord)
   }
-  
+
   finalizeAllRecords({ finalizedRecords, finalizationCookie })
-  
+
   for (const newRecord of finalizedRecords) {
     const newId = newRecord[resourceAPI.keyField]
     const origRecord = resourceAPI.get(newId, { rawData : true })
