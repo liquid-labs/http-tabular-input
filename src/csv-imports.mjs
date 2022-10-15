@@ -235,8 +235,7 @@ const processNewAndUpdated = ({
   for (const newRecord of finalizedRecords) {
     const newId = newRecord[resourceAPI.keyField]
     const origRecord = resourceAPI.get(newId, { rawData : true })
-    const cleanNewRecord = pickBy(newRecord, (v, k) => !k.startsWith('_'))
-    const diff = diffString(origRecord, cleanNewRecord, { color : false })
+    const diff = diffString(origRecord, newRecord, { color : false })
 
     if (diff) {
       actions.push(() => {
