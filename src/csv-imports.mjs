@@ -20,7 +20,7 @@ const identity = (r) => r
 *     but this time with the assurance that all field names are normalized and required fields are present. Defaults to
 *     the identity funciton `(r) => r`
 * - `headerNormalizations`: required funtion to transform and normalizes header names. E.g. 'Given name' and 'First
-      name' may be mapped to 'givenName'. Has the form of:
+*      name' may be mapped to 'givenName'. Has the form of:
 *     ```
 *     [ [<regex matcher>, <normalized field name>], ... ]
 *     ```
