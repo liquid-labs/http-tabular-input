@@ -1,8 +1,8 @@
 {
-  "name": "@liquid-labs/import-export",
+  "name": "@liquid-labs/http-tabular-input",
   "version": "1.0.0-alpha.3",
   "description": "Utilities to import data (into JSON) from various sources (CSV, TSV, etc.)",
-  "main": "dist/import-export.js",
+  "main": "dist/http-tabular-input.js",
   "scripts": {
     "build": "make",
     "test": "make test",
@@ -16,13 +16,13 @@
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "UNLICENSED",
   "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/Liquid-Labs/import-export.git"
+    "url": "git+ssh://git@github.com/Liquid-Labs/http-tabular-input.git",
+    "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/Liquid-Labs/import-export/issues"
+    "url": "https://github.com/Liquid-Labs/http-tabular-input/issues"
   },
-  "homepage": "https://github.com/Liquid-Labs/import-export#readme",
+  "homepage": "https://github.com/Liquid-Labs/http-tabular-input#readme",
   "liq": {
     "orgBase": "git@github.com:Liquid-Labs/Liquid-Labs.git",
     "packageType": "node|library"
