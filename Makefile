@@ -9,8 +9,7 @@ MAIN_KEY:=import-export
 ### Project parameters
 
 ### Static scripts and paths
-NPM_BIN:=$(shell npm bin)
-CATALYST_SCRIPTS:=$(NPM_BIN)/catalyst-scripts
+CATALYST_SCRIPTS:=npx catalyst-scripts
 
 SRC:=src
 DIST:=dist
@@ -57,8 +56,11 @@ $(MAIN_TEST_BUILT_FILES) &: $(MAIN_TEST_SRC_FILES)
 # test: $(MAIN_TEST_BUILT_FILES) $(MAIN_TEST_BUILT_DATA)
 #	JS_SRC=test-staging $(CATALYST_SCRIPTS) test
 
-lint:
-	JS_SRC=$(SRC) $(CATALYST_SCRIPTS) lint
+last-lint.txt: $(ALL_FILES)
+	( set -e; set -o pipefail; \
+		JS_LINT_TARGET=$(SRC) $(CATALYST_SCRIPTS) lint | tee last-lint.txt; )
+
+lint: last-lint.txt
 
 lint-fix:
 	JS_SRC=$(SRC) $(CATALYST_SCRIPTS) lint-fix

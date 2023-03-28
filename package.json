@@ -1,8 +1,8 @@
 {
   "name": "@liquid-labs/http-tabular-input",
-  "version": "1.0.0-alpha.3",
-  "description": "Utilities to import data (into JSON) from various sources (CSV, TSV, etc.)",
-  "main": "dist/http-tabular-input.js",
+  "version": "1.0.0-alpha.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "build": "make",
     "test": "make test",
@@ -16,22 +16,23 @@
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "UNLICENSED",
   "repository": {
-    "url": "git+ssh://git@github.com/Liquid-Labs/http-tabular-input.git",
-    "type": "git"
+    "type": "git",
+    "url": "git+ssh://git@github.com/liquid-labs/http-tabular-input.git"
   },
   "bugs": {
-    "url": "https://github.com/Liquid-Labs/http-tabular-input/issues"
+    "url": "https://github.com/liquid-labs/http-tabular-input/issues"
   },
-  "homepage": "https://github.com/Liquid-Labs/http-tabular-input#readme",
+  "homepage": "https://github.com/liquid-labs/http-tabular-input#readme",
   "liq": {
-    "orgBase": "git@github.com:Liquid-Labs/Liquid-Labs.git",
-    "packageType": "node|library"
+    "orgBase": "git@github.com:liquid-labs/liquid-labs.git",
+    "packageType": "node|lib"
   },
   "devDependencies": {
-    "@liquid-labs/catalyst-scripts": "^1.0.0-alpha.56"
+    "@liquid-labs/catalyst-scripts": "^1.0.0-alpha.55"
   },
   "dependencies": {
     "@fast-csv/parse": "^4.3.6",
-    "json-diff": "^0.9.0"
+    "json-diff": "^0.9.0",
+    "lodash.pickby": "^4.6.0"
   }
 }
