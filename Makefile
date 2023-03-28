@@ -4,7 +4,7 @@
 
 ## Variables and target identification
 
-MAIN_KEY:=import-export
+MAIN_KEY:=http-tabular-input
 
 ### Project parameters
 
