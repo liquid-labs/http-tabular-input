@@ -1,6 +1,6 @@
 {
   "name": "@liquid-labs/http-tabular-input",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "",
   "main": "dist/http-tabular-input.js",
   "scripts": {
