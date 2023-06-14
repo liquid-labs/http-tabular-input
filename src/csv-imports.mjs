@@ -39,13 +39,13 @@ const identity = (r) => r
 *   Must implement:
 *   - `itemName`
 *   - `keyField`
-*   - `resourceName`: plural item
+*   - `itemsName`: plural item
 *   - add()
 *   - delete()
 *   - get()
 *   - list()
 *   - update()
-*   - write(): updates underlying DB
+*   - save(): updates underlying DB
 * - `validateAndNormalizeRecords`: optional function used to process the array of records to extract and normalize
 *     data. This can be used to add new data as well as combine, vaidate, and transform existing data. E.g.: split field
 *     'fullName' into 'givenName' and 'surname'; calculate 'daysSinceCertification' from 'lastCertification'; parse
@@ -82,7 +82,7 @@ const importFromCSV = (options) => {
 * - `resourceAPI`: see `importFromCSV`
 */
 const validateAPI = ({ res, resourceAPI }) => {
-  const requiredAPI = ['add', 'delete', 'get', 'itemName', 'keyField', 'list', 'resourceName', 'write']
+  const requiredAPI = ['add', 'delete', 'get', 'itemName', 'keyField', 'list', 'itemsName', 'save']
   const missing = requiredAPI.reduce((acc, key) => {
     if (!resourceAPI[key]) { acc.push(key) }
     return acc
@@ -171,7 +171,7 @@ const processPipelines = ({
   validateAndNormalizeRecords = identity,
   validateAllRecords = () => []
 }) => {
-  const names = { itemName : resourceAPI.itemName, resourceName : resourceAPI.resourceName }
+  const names = { itemName : resourceAPI.itemName, itemsName : resourceAPI.itemsName }
   Promise.all(pipelines).then(() => {
     const normalizedRecords = tryValidateAndNormalizeRecords({ records, res, validateAndNormalizeRecords, ...names })
     if (!checkStatus({ res })) return
@@ -191,7 +191,7 @@ const processPipelines = ({
     }
 
     try {
-      resourceAPI.write()
+      resourceAPI.save()
       res.json({ message : actionSummary.join('\n') })
     }
     catch (e) {
