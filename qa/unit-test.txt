@@ -1,9 +1,0 @@
-Test git rev: 1e584e5f7b8f826ff915177ce2dc44355348bb24
-No tests found, exiting with code 1
-Run with `--passWithNoTests` to exit with code 0
-In /Users/zane/.liq/playground/liquid-labs/http-tabular-input/test-staging
-  2 files checked.
-  testMatch: **/__tests__/**/*.[jt]s?(x), **/?(*.)+(spec|test).[tj]s?(x) - 0 matches
-  testPathIgnorePatterns: /node_modules/ - 2 matches
-  testRegex:  - 0 matches
-Pattern:  - 0 matches
